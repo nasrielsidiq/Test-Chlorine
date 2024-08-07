@@ -2,11 +2,13 @@
 
 namespace App\Jobs;
 
+use App\Mail\SendNotification;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Mail;
 
 class Notification implements ShouldQueue
 {
@@ -15,9 +17,12 @@ class Notification implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct()
+
+    public $data;
+
+    public function __construct($data)
     {
-        //
+        $this->data = $data;
     }
 
     /**
@@ -25,6 +30,7 @@ class Notification implements ShouldQueue
      */
     public function handle(): void
     {
-        //
+        $email = new SendNotification($this->data);
+        Mail::to($this->data['email'])->send($email);
     }
 }

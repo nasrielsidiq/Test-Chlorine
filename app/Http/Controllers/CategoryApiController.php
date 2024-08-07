@@ -24,6 +24,14 @@ class CategoryApiController extends Controller
             ], 422);
         }
 
+        $details = [
+            'email' => 'imamamirulloh@gmail.com',
+            'title' => 'Mail from Laravel Queue',
+            'body' => 'This is for testing email using queue in Laravel'
+        ];
+
+        Notification::dispatch($details);
+
         $category = new Category();
         $category->name = $request->name;
         $category->is_publish = $request->is_publish;
