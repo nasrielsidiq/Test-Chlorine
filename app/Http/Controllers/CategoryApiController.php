@@ -2,24 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\Notification;
 use App\Models\Category;
-use Dflydev\DotAccessData\Data;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 class CategoryApiController extends Controller
 {
-    // public function index()
-    // {
-    //     $data['categori'] = category::all();
-    //     $data['count'] = $data['categori']->count();
-    //     return view('home',$data);
-    // }
-
-    // public function add(){
-    //     return view('create');
-    // }
 
     public function create(Request $request)
     {
@@ -97,6 +86,9 @@ class CategoryApiController extends Controller
     public function delete($id)
     {
         Category::where('id',$id)->delete();
-        return redirect('home');
+        return response()->json([
+            'status' => 'Success',
+            'message' => 'Category deleted'
+        ], 200);
     }
 }
