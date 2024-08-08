@@ -93,7 +93,11 @@ class CategoryController extends Controller
             'message' => 'Delete success'
         ]);
 
-        $data->delete();
+        if (!$data->delete()) {
+            Session::flash('errors', 'Delete failed');
+        }else{
+            Session::flash('message', 'Delete success');
+        }
         return redirect('/categories');
     }
 }
