@@ -90,12 +90,12 @@ class CategoryApiController extends Controller
             'message' => 'Update success'
         ]);
 
-
-
-        $category = Category::where('id', $id)->update([
+        Category::where('id', $id)->update([
             'name' => $request->name,
             'is_publish' => $request->is_publish,
         ]);
+
+        $category = Category::where('id', $id)->first();
         // if ($category) {
             return response()->json([
                 'status' => 'Success',
