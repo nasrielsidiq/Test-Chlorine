@@ -2,7 +2,9 @@
 
 namespace App\Jobs;
 
+use App\Mail\CategoryUpdate;
 use App\Mail\SendNotification;
+use App\Mail\UserUpdate;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -30,7 +32,11 @@ class Notification implements ShouldQueue
      */
     public function handle(): void
     {
-        $email = new SendNotification($this->data);
-        Mail::to($this->data['email'])->send($email);
+        if ($this->data['type'] == 'category') {
+            $mail = new CategoryUpdate($this->data);
+        }else if ($this->data['type'] == 'user') {
+            $mail = new UserUpdate($this->data);
+        }
+        Mail::to($this->data['email'])->send($mail);
     }
 }
